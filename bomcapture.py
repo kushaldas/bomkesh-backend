@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import sys
 import redis
 import ujson
@@ -104,7 +105,12 @@ def process_packet(p):
 
 
 def main():
-    rec = Recorder("wg0")
+    if len(sys.argv) > 1:
+        device = sys.argv[1]
+    else:
+        device = "wg0"
+    rec = Recorder(device)
+    print(f"Started capturing packets on {device}")
     for record in rec:
         try:
             if record.startswith("["):
