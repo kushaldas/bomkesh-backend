@@ -11,3 +11,11 @@ apt install python3-redis python3-ujson tshark
 
 The idea is to use system provided packages only.
 
+## Running the tool
+
+```
+./bomcapture.py eth0
+```
+
+By default it will use `wg0` as the device.
+
