@@ -20,6 +20,7 @@ def process_packet(p):
     It pushes the data into proper queues in Redis for further analysis.
     """
     layers = p["_source"]["layers"]
+    time_epoch = layers["frame"]["frame.time_epoch"]
     if not "ip" in layers:
         return
     ipl = layers["ip"]
@@ -45,7 +46,7 @@ def process_packet(p):
                             rdb.sadd(f"ip:{ipl['ip.dst']}", server_name)
                             # print(f"ip.src {ipl['ip.src']} ip.dst {ipl['ip.dst']} Server: {server_name}")
                             return
-        rawpacket = {"is_dns": False, "src": ipl["ip.src"], "dst": ipl["ip.dst"]}
+        rawpacket = {"is_dns": False, "src": ipl["ip.src"], "dst": ipl["ip.dst"], "time": time_epoch}
         if "tcp" in layers:
             tcp = layers["tcp"]
             rawpacket["ptype"] = "tcp"
