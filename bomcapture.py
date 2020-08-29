@@ -59,6 +59,8 @@ def process_packet(p):
             rawpacket["srcport"] = udp["udp.srcport"]
             rawpacket["dstport"] = udp["udp.dstport"]
             # print(f"UDP ip.src {ipl['ip.src']}:{srcport} ip.dst {ipl['ip.dst']}:{dstport}")
+        else:  # This means the packet is not UDP or TCP
+            return
         if "dns" in layers:
             dns = layers["dns"]
             rawpacket["is_dns"] = True
